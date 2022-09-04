@@ -8,30 +8,27 @@ import com.claseNueveMapper.app.entity.Person;
 import com.claseNueveMapper.app.mapper.PersonMapperImpl;
 import com.claseNueveMapper.app.service.IPersonService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.claseNueveMapper.app.utils.CheckDataBase.isRegistrationExist;
 
 public class PersonServiceImpl implements IPersonService {
 
     //En este archivo haríamos las peticiones a la base de datos. Desde las implementaciones a través de la interfase.
     private ConnectionDB connectionDB = new ConnectionDB();
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-    Person person = null;
 
     private PersonMapperImpl personaMapperImpl = new PersonMapperImpl();
 
     @Override
     public void insertPerson(Person person) {
 
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
         try {
             conn = connectionDB.getConnection();
-
             stmt = conn.prepareStatement(Constants.SQL_INSERT_PERSON);
 
             stmt.setString(1, person.getName());
@@ -44,12 +41,13 @@ public class PersonServiceImpl implements IPersonService {
             System.out.println("Se ingresó a la persona correctamente");
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                connectionDB.close(rs);
-                connectionDB.close(stmt);
-                connectionDB.close(conn);
+                if (stmt != null || conn != null) {
+                    connectionDB.close(stmt);
+                    connectionDB.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -59,11 +57,13 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public PersonResponseDTO updatePerson(PersonDTO personDTO, Integer id) {
 
-        Integer resultUpdate;
+        Connection conn = null;
+        PreparedStatement stmt = null;
 
         try {
-            conn = connectionDB.getConnection();
+            isRegistrationExist("personas", id);
 
+            conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_UPDATE_PERSON);
 
             stmt.setString(1, personDTO.getName());
@@ -72,7 +72,7 @@ public class PersonServiceImpl implements IPersonService {
             stmt.setString(4,personDTO.getAddress());
             stmt.setInt(5, id);
 
-            resultUpdate = stmt.executeUpdate();
+            Integer resultUpdate = stmt.executeUpdate();
 
             System.out.println(resultUpdate);
 
@@ -80,11 +80,13 @@ public class PersonServiceImpl implements IPersonService {
             return personResponseDTO;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                connectionDB.close(stmt);
-                connectionDB.close(conn);
+                if (stmt != null || conn != null) {
+                    connectionDB.close(stmt);
+                    connectionDB.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -94,28 +96,33 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public void deletePerson(Integer id) {
 
-        Integer resultDelete;
+        Connection conn = null;
+        PreparedStatement stmt = null;
 
         try {
+            isRegistrationExist("personas", id);
+
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_DELETE_PERSON);
 
             stmt.setInt(1,id);
 
-            resultDelete = stmt.executeUpdate();
+            Integer resultDelete = stmt.executeUpdate();
 
             if(resultDelete==0){
                 System.out.println("No se encontró registro con id: " + id);
             } else {
-                System.out.println("Borrando datos de persona: id " + id);
+                System.out.println("Borrando datos de persona con id " + id);
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                connectionDB.close(stmt);
-                connectionDB.close(conn);
+                if (stmt != null || conn != null) {
+                    connectionDB.close(stmt);
+                    connectionDB.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -124,7 +131,12 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public List<Person> getAllPersons() {
+
         List<Person> persons = new ArrayList<>();
+        Person person;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
             conn = connectionDB.getConnection();
@@ -132,7 +144,7 @@ public class PersonServiceImpl implements IPersonService {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int idPerson = rs.getInt("id_person");
+                int idPerson = rs.getInt("id");
                 String name = rs.getString("name");
                 String lastName = rs.getString("last_name");
                 Integer age = rs.getInt("age");
@@ -144,16 +156,58 @@ public class PersonServiceImpl implements IPersonService {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                connectionDB.close(rs);
-                connectionDB.close(stmt);
-                connectionDB.close(conn);
+                if (rs != null || stmt != null || conn != null) {
+                    connectionDB.close(rs);
+                    connectionDB.close(stmt);
+                    connectionDB.close(conn);
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
         }
         return persons;
+    }
+
+    @Override
+    public Person getOnePerson(Integer id){
+
+        Person person = new Person();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = connectionDB.getConnection();
+            stmt = conn.prepareStatement(Constants.SQL_SELECT_PERSON_BY_ID);
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                person.setName(rs.getString("name"));
+                person.setLastName(rs.getString("last_name"));
+                person.setAge(rs.getInt("age"));
+                person.setAddress(rs.getString("address"));
+                person.setIdPerson(rs.getInt("id_person"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            try {
+                if (rs != null || stmt != null || conn != null) {
+                    connectionDB.close(rs);
+                    connectionDB.close(stmt);
+                    connectionDB.close(conn);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace(System.out);
+            }
+        }
+
+        return person;
+
     }
 }

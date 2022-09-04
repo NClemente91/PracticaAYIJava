@@ -5,37 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18bbf49f-743b-4e55-beec-46e14b13f3ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/DispatcherAppMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/configuration/ConnectionDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/constants/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/controller/EmployeeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/controller/PersonController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/request/CustomerDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/request/EmployeeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/request/PersonDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/response/CustomerResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/response/EmployeeResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/response/PersonResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/mapper/CustomerMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/mapper/EmployeeMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/mapper/PersonMapperImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/ICustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IEmployeeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IPersonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/CustomerServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/EmployeeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/PersonServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/utils/CheckDataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/DispatcherAppMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/DispatcherAppMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/configuration/ConnectionDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/configuration/ConnectionDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/controller/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/controller/PersonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/request/EmployeeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/dtos/request/EmployeeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/entity/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IEmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IEmployeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IPersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/IPersonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/EmployeeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/EmployeeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/PersonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/claseNueveMapper/app/service/impl/PersonServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

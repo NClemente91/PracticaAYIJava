@@ -10,6 +10,7 @@ import lombok.*;
 
 public class Customer extends Person {
 
-    private String vip;
+    private Integer idCustomer;
+    private boolean vip;
 
 }

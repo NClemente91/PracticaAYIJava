@@ -14,4 +14,6 @@ public interface IPersonService {
     void deletePerson(Integer id);
 
     List<Person> getAllPersons();
+
+    Person getOnePerson(Integer id);
 }

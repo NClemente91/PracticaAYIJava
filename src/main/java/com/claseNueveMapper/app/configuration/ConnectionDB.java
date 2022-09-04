@@ -11,7 +11,7 @@ public class ConnectionDB {
     }
 
     public void close(ResultSet rs) throws SQLException {
-        rs.close();
+            rs.close();
     }
 
     public void close(Statement smtm) throws SQLException {

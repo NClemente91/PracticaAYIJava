@@ -11,6 +11,8 @@ import com.claseNueveMapper.app.entity.Employee;
 import com.claseNueveMapper.app.entity.Person;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DispatcherAppMain {
@@ -21,7 +23,7 @@ public class DispatcherAppMain {
         EmployeeController employeeController = new EmployeeController();
         CustomerController customerController = new CustomerController();
 
-//        /*-----Person-----*/
+        /*-----Person-----*/
 //        PersonDTO personDTO = new PersonDTO();
 //
 //        Person person1 = new Person();
@@ -37,8 +39,8 @@ public class DispatcherAppMain {
 //        System.out.println(personController.listAllPersons());
 //        personController.deletePerson(id1);
 //        System.out.println("");
-//
-//        /*-----Employee-----*/
+
+        /*-----Employee-----*/
 //        EmployeeDTO employeeDTO = new EmployeeDTO();
 //
 //        Employee employee1 = new Employee();
@@ -54,8 +56,8 @@ public class DispatcherAppMain {
 //        System.out.println(employeeController.listAllEmployees());
 //        employeeController.deleteEmployee(id2);
 //        System.out.println("");
-//
-//        /*-----Customer-----*/
+
+        /*-----Customer-----*/
 //        CustomerDTO customerDTO = new CustomerDTO();
 //
 //        Customer customer1 = new Customer();
@@ -69,34 +71,43 @@ public class DispatcherAppMain {
 //        customerController.deleteCustomer(id3);
 
         /*-----Connection SQL-----*/
-        List<Person> persons;
-
-        persons = personController.listAllPersons();
-
-        persons.forEach(person -> {
-            System.out.println("persona = " + person);
-        });
-
-
-
-//      System.out.println("-------------------------");
-//      System.out.println("----------DELETE---------");
-//      personController.deletePerson(6);
-
-//        System.out.println("-------------------------");
-//        System.out.println("----------INSERT---------");
-//        Person personInsert1 = new Person("Juan","Perez",40,"Chaco");
+//        List<Person> persons = personController.listAllPersons();
+//        System.out.println("----------LIST OF PERSONS---------");
+//        persons.forEach(person -> {
+//            System.out.println("Persona = " + person);
+//        });
+//
+//        List<Employee> employees = employeeController.listAllEmployees();
+//        System.out.println("----------LIST OF EMPLOYEES---------");
+//        employees.forEach(employee -> {
+//            System.out.println("Employee = " + employee);
+//        });
+//
+//        System.out.println("--------------------------------");
+//        System.out.println("----------INSERT PERSON---------");
+//        Person personInsert1 = new Person("Mariano", "Romero", 27, "Formosa");
 //        personController.addPerson(personInsert1);
+//
+//        System.out.println("----------INSERT EMPLOYEE---------");
+//        Calendar calendar = Calendar.getInstance();
+//        Employee employeeInsert1 = new Employee(calendar.getTime(), 870434.00, 1);
+//        employeeController.addEmployee(employeeInsert1);
+//
+//        System.out.println("--------------------------------");
+//        System.out.println("----------DELETE PERSON---------");
+//        personController.deletePerson(4);
+//
+//        System.out.println("----------DELETE EMPLOYEE---------");
+//        employeeController.deleteEmployee(6);
+//
+//        System.out.println("--------------------------------");
+//        System.out.println("----------UPDATE PERSON---------");
+//        PersonDTO personUpdate1 = new PersonDTO("Juan", "Perez", 40, "Chaco");
+//        System.out.println(personController.updatePerson(personUpdate1, 3));
+//
+//        System.out.println("----------UPDATE EMPLOYEE---------");
+//        EmployeeDTO employeeUpdate1 = new EmployeeDTO(50000.00);
+//        System.out.println(employeeController.updateEmployee(employeeUpdate1, 4));
 
-        System.out.println("-------------------------");
-        System.out.println("----------UPDATE---------");
-        PersonDTO personUpdate1 = new PersonDTO("JuanMod","PerezMOD",40,"Chaco");
-        System.out.println(personController.updatePerson(personUpdate1,7));
-
-        persons = personController.listAllPersons();
-        System.out.println("-------------------------");
-        for(Person personOfList: persons) {
-            System.out.println("persona = " + personOfList);
-        }
     }
 }

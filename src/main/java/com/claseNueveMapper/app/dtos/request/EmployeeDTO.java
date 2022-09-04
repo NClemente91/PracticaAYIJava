@@ -2,6 +2,8 @@ package com.claseNueveMapper.app.dtos.request;
 
 import lombok.*;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -10,10 +12,6 @@ import lombok.*;
 
 public class EmployeeDTO {
 
-    private String name;
-    private String lastName;
-    private Integer age;
-    private String address;
     private Double salary;
 
 }
