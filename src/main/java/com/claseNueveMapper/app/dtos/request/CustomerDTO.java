@@ -11,5 +11,6 @@ import lombok.*;
 public class CustomerDTO{
 
     private Boolean vip;
+    private Double accountBalance;
 
 }

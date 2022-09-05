@@ -44,10 +44,8 @@ public class PersonServiceImpl implements IPersonService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -57,12 +55,12 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public PersonResponseDTO updatePerson(PersonDTO personDTO, Integer id) {
 
+        isRegistrationExist("personas", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            isRegistrationExist("personas", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_UPDATE_PERSON);
 
@@ -84,10 +82,8 @@ public class PersonServiceImpl implements IPersonService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -97,12 +93,12 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public void deletePerson(Integer id) {
 
+        isRegistrationExist("personas", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            isRegistrationExist("personas", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_DELETE_PERSON);
 
@@ -120,10 +116,8 @@ public class PersonServiceImpl implements IPersonService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -160,11 +154,9 @@ public class PersonServiceImpl implements IPersonService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -175,6 +167,8 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public PersonResponseDTO getOnePerson(Integer id){
 
+        isRegistrationExist("personas", id);
+
         Person person = new Person();
         PersonResponseDTO personResponseDTO;
         Connection conn = null;
@@ -182,8 +176,6 @@ public class PersonServiceImpl implements IPersonService {
         ResultSet rs = null;
 
         try {
-            isRegistrationExist("personas", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_SELECT_PERSON_BY_ID);
             stmt.setInt(1,id);
@@ -203,11 +195,9 @@ public class PersonServiceImpl implements IPersonService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }

@@ -93,11 +93,11 @@ public class DispatcherAppMain {
 //        System.out.println("----------GET ONE PERSON---------");
 //        System.out.println(personController.listOnePerson(1));
 
-        System.out.println("----------GET ONE EMPLOYEE---------");
-        System.out.println(personController.listOnePerson(1));
+//        System.out.println("----------GET ONE EMPLOYEE---------");
+//        System.out.println(employeeController.listOneEmployee(1));
 
-        System.out.println("----------GET ONE CUSTOMER---------");
-        System.out.println(personController.listOnePerson(1));
+//        System.out.println("----------GET ONE CUSTOMER---------");
+//        System.out.println(customerController.listOneCustomer(1));
 
 //        System.out.println("--------------------------------");
 //        System.out.println("----------INSERT PERSON---------");
@@ -110,7 +110,7 @@ public class DispatcherAppMain {
 //        employeeController.addEmployee(employeeInsert1);
 
 //        System.out.println("----------INSERT CUSTOMER---------");
-//        Customer customerInsert1 = new Customer(true, 3);
+//        Customer customerInsert1 = new Customer(true, 0.0, 2);
 //        customerController.addCustomer(customerInsert1);
 
 //        System.out.println("--------------------------------");
@@ -121,7 +121,7 @@ public class DispatcherAppMain {
 //        employeeController.deleteEmployee(6);
 
 //        System.out.println("----------DELETE CUSTOMER---------");
-//        customerController.deleteCustomer(4);
+//        customerController.deleteCustomer(5);
 
 //        System.out.println("--------------------------------");
 //        System.out.println("----------UPDATE PERSON---------");
@@ -133,7 +133,7 @@ public class DispatcherAppMain {
 //        System.out.println(employeeController.updateEmployee(employeeUpdate1, 4));
 
 //        System.out.println("----------UPDATE CUSTOMER---------");
-//        CustomerDTO customerUpdate1 = new CustomerDTO(false);
+//        CustomerDTO customerUpdate1 = new CustomerDTO(false,-2000.0);
 //        System.out.println(customerController.updateCustomer(customerUpdate1, 1));
 
     }

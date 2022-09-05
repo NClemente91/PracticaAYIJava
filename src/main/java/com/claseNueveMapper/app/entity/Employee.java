@@ -22,4 +22,5 @@ public class Employee {
         this.salary = salary;
         this.idPersonEmployee = idPersonEmployee;
     }
+
 }

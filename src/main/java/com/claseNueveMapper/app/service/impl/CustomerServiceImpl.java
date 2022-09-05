@@ -8,7 +8,6 @@ import com.claseNueveMapper.app.entity.Customer;
 import com.claseNueveMapper.app.mapper.CustomerMapperImpl;
 import com.claseNueveMapper.app.service.ICustomerService;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +23,20 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void insertCustomer(Customer customer) {
+
+        //Para determinar si la persona relacionada existe en los registros
+        isRegistrationExist("personas", customer.getIdPersonCustomer());
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            //Para determinar si la persona relacionada existe en los registros
-            isRegistrationExist("personas", customer.getIdPersonCustomer());
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_INSERT_CUSTOMER);
 
             stmt.setBoolean(1, customer.isVip());
-            stmt.setInt(2,customer.getIdPersonCustomer());
+            stmt.setDouble(2,customer.getAccountBalance());
+            stmt.setInt(3,customer.getIdPersonCustomer());
 
             stmt.executeUpdate();
 
@@ -45,10 +46,8 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -57,18 +56,20 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public CustomerResponseDTO updateCustomer(CustomerDTO customerDTO, Integer id) {
+
+        isRegistrationExist("clientes", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            isRegistrationExist("clientes", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_UPDATE_CUSTOMER);
 
-            //Solo permito modificar el parámetro vip del empleado;
+            //Solo permito modificar el parámetro vip y el saldo de la cuenta del empleado;
             stmt.setBoolean(1, customerDTO.getVip());
-            stmt.setInt(2, id);
+            stmt.setDouble(2,customerDTO.getAccountBalance());
+            stmt.setInt(3, id);
 
             Integer resultUpdate = stmt.executeUpdate();
 
@@ -82,10 +83,8 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -94,13 +93,13 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void deleteCustomer(Integer id) {
+
+        isRegistrationExist("clientes", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-
-            isRegistrationExist("clientes", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_DELETE_CUSTOMER);
 
@@ -118,10 +117,8 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -144,9 +141,10 @@ public class CustomerServiceImpl implements ICustomerService {
             while (rs.next()) {
                 int idCustomer = rs.getInt("id");
                 Boolean vip = rs.getBoolean("vip");
+                Double accountBalance = rs.getDouble("account_balance");
                 Integer idPersonCustomer = rs.getInt("persona_FK");
 
-                customer = new Customer(idCustomer, vip, idPersonCustomer);
+                customer = new Customer(idCustomer, vip,accountBalance, idPersonCustomer);
 
                 customers.add(customer);
             }
@@ -155,11 +153,9 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -168,6 +164,9 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     public Customer getOneCustomer(Integer id){
+
+        isRegistrationExist("clientes", id);
+
         Customer customer = new Customer();
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -180,7 +179,9 @@ public class CustomerServiceImpl implements ICustomerService {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
+                customer.setIdCustomer(rs.getInt("id"));
                 customer.setVip(rs.getBoolean("vip"));
+                customer.setAccountBalance(rs.getDouble("account_balance"));
                 customer.setIdPersonCustomer(rs.getInt("persona_FK"));
             }
 
@@ -188,11 +189,9 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }

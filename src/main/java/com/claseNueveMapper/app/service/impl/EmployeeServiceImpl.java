@@ -27,13 +27,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public void insertEmployee(Employee employee) {
+
+        //Para determinar si la persona relacionada existe en los registros
+        isRegistrationExist("personas", employee.getIdPersonEmployee());
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            //Para determinar si la persona relacionada existe en los registros
-            isRegistrationExist("personas", employee.getIdPersonEmployee());
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_INSERT_EMPLOYEE);
 
@@ -50,10 +51,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -62,12 +61,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, Integer id) {
+
+        isRegistrationExist("empleados", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-            isRegistrationExist("empleados", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_UPDATE_EMPLOYEE);
 
@@ -87,10 +87,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -99,13 +97,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public void deleteEmployee(Integer id) {
+
+        isRegistrationExist("empleados", id);
+
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-
-            isRegistrationExist("empleados", id);
-
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_DELETE_EMPLOYEE);
 
@@ -123,10 +121,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (stmt != null || conn != null) {
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -162,11 +158,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
@@ -175,6 +169,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     public Employee getOneEmployee(Integer id){
+
+        isRegistrationExist("empleados", id);
+
         Employee employee = new Employee();
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -196,11 +193,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                if (rs != null || stmt != null || conn != null) {
-                    connectionDB.close(rs);
-                    connectionDB.close(stmt);
-                    connectionDB.close(conn);
-                }
+                connectionDB.close(rs);
+                connectionDB.close(stmt);
+                connectionDB.close(conn);
             } catch (SQLException ex) {
                 ex.printStackTrace(System.out);
             }
