@@ -13,7 +13,5 @@ public class PersonResponseDTO {
     private Integer id;
     private String name;
     private String lastName;
-    private Integer age;
-    private String address;
 
 }

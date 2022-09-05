@@ -76,6 +76,7 @@ public class PersonServiceImpl implements IPersonService {
 
             System.out.println(resultUpdate);
 
+            //Parcial - A mejorar - Para que no devuelva error
             PersonResponseDTO personResponseDTO = new PersonResponseDTO();
             return personResponseDTO;
 
@@ -172,14 +173,17 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public Person getOnePerson(Integer id){
+    public PersonResponseDTO getOnePerson(Integer id){
 
         Person person = new Person();
+        PersonResponseDTO personResponseDTO;
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
+            isRegistrationExist("personas", id);
+
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_SELECT_PERSON_BY_ID);
             stmt.setInt(1,id);
@@ -190,8 +194,10 @@ public class PersonServiceImpl implements IPersonService {
                 person.setLastName(rs.getString("last_name"));
                 person.setAge(rs.getInt("age"));
                 person.setAddress(rs.getString("address"));
-                person.setIdPerson(rs.getInt("id_person"));
+                person.setIdPerson(rs.getInt("id"));
             }
+
+            personResponseDTO = personaMapperImpl.toEntityToDto(person);
 
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
@@ -207,7 +213,7 @@ public class PersonServiceImpl implements IPersonService {
             }
         }
 
-        return person;
+        return personResponseDTO;
 
     }
 }

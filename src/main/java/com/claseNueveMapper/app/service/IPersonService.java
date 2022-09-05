@@ -15,5 +15,5 @@ public interface IPersonService {
 
     List<Person> getAllPersons();
 
-    Person getOnePerson(Integer id);
+    PersonResponseDTO getOnePerson(Integer id);
 }

@@ -76,38 +76,65 @@ public class DispatcherAppMain {
 //        persons.forEach(person -> {
 //            System.out.println("Persona = " + person);
 //        });
-//
+
 //        List<Employee> employees = employeeController.listAllEmployees();
 //        System.out.println("----------LIST OF EMPLOYEES---------");
 //        employees.forEach(employee -> {
 //            System.out.println("Employee = " + employee);
 //        });
-//
+
+//        List<Customer> customers = customerController.listAllCustomers();
+//        System.out.println("----------LIST OF CUSTOMERS---------");
+//        customers.forEach(customer -> {
+//            System.out.println("Customer = " + customer);
+//        });
+
+//        System.out.println("--------------------------------");
+//        System.out.println("----------GET ONE PERSON---------");
+//        System.out.println(personController.listOnePerson(1));
+
+        System.out.println("----------GET ONE EMPLOYEE---------");
+        System.out.println(personController.listOnePerson(1));
+
+        System.out.println("----------GET ONE CUSTOMER---------");
+        System.out.println(personController.listOnePerson(1));
+
 //        System.out.println("--------------------------------");
 //        System.out.println("----------INSERT PERSON---------");
 //        Person personInsert1 = new Person("Mariano", "Romero", 27, "Formosa");
 //        personController.addPerson(personInsert1);
-//
+
 //        System.out.println("----------INSERT EMPLOYEE---------");
 //        Calendar calendar = Calendar.getInstance();
 //        Employee employeeInsert1 = new Employee(calendar.getTime(), 870434.00, 1);
 //        employeeController.addEmployee(employeeInsert1);
-//
+
+//        System.out.println("----------INSERT CUSTOMER---------");
+//        Customer customerInsert1 = new Customer(true, 3);
+//        customerController.addCustomer(customerInsert1);
+
 //        System.out.println("--------------------------------");
 //        System.out.println("----------DELETE PERSON---------");
 //        personController.deletePerson(4);
-//
+
 //        System.out.println("----------DELETE EMPLOYEE---------");
 //        employeeController.deleteEmployee(6);
-//
+
+//        System.out.println("----------DELETE CUSTOMER---------");
+//        customerController.deleteCustomer(4);
+
 //        System.out.println("--------------------------------");
 //        System.out.println("----------UPDATE PERSON---------");
 //        PersonDTO personUpdate1 = new PersonDTO("Juan", "Perez", 40, "Chaco");
 //        System.out.println(personController.updatePerson(personUpdate1, 3));
-//
+
 //        System.out.println("----------UPDATE EMPLOYEE---------");
 //        EmployeeDTO employeeUpdate1 = new EmployeeDTO(50000.00);
 //        System.out.println(employeeController.updateEmployee(employeeUpdate1, 4));
+
+//        System.out.println("----------UPDATE CUSTOMER---------");
+//        CustomerDTO customerUpdate1 = new CustomerDTO(false);
+//        System.out.println(customerController.updateCustomer(customerUpdate1, 1));
 
     }
 }

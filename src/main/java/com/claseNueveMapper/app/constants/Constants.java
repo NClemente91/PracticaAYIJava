@@ -17,6 +17,12 @@ public class Constants {
     public static final String SQL_UPDATE_EMPLOYEE = "UPDATE empleados SET salario = ? WHERE id = ?";
     public static final String SQL_DELETE_EMPLOYEE = "DELETE FROM empleados WHERE id = ?";
 
+    public static final String SQL_SELECT_CUSTOMER = "SELECT id, vip, persona_FK FROM clientes";
+    public static final String SQL_SELECT_CUSTOMER_BY_ID = "SELECT id, vip, persona_FK FROM clientes WHERE id = ?";
+    public static final String SQL_INSERT_CUSTOMER = "INSERT INTO clientes(vip, persona_FK) VALUES(?, ?)";
+    public static final String SQL_UPDATE_CUSTOMER = "UPDATE clientes SET vip = ? WHERE id = ?";
+    public static final String SQL_DELETE_CUSTOMER = "DELETE FROM clientes WHERE id = ?";
+
     /**
      * Connection variables to DB.
      */

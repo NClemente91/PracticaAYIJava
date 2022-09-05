@@ -3,6 +3,7 @@ package com.claseNueveMapper.app.controller;
 import com.claseNueveMapper.app.dtos.request.EmployeeDTO;
 import com.claseNueveMapper.app.dtos.response.EmployeeResponseDTO;
 import com.claseNueveMapper.app.entity.Employee;
+import com.claseNueveMapper.app.entity.Person;
 import com.claseNueveMapper.app.service.IEmployeeService;
 import com.claseNueveMapper.app.service.impl.EmployeeServiceImpl;
 
@@ -25,6 +26,10 @@ public class EmployeeController {
 
     public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, Integer id) {
         return iEmployeeService.updateEmployee(employeeDTO, id);
+    }
+
+    public Employee listOneEmployee(Integer id) {
+        return iEmployeeService.getOneEmployee(id);
     }
 
 }

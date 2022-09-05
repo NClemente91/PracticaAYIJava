@@ -27,8 +27,7 @@ public class PersonController {
     public PersonResponseDTO updatePerson(PersonDTO person, Integer id) {
         return iPersonService.updatePerson(person, id);
     }
-
-    public Person listOnePerson(Integer id) {
+    public PersonResponseDTO listOnePerson(Integer id) {
         return iPersonService.getOnePerson(id);
     }
 }

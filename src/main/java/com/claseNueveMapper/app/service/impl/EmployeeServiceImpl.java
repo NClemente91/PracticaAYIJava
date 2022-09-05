@@ -22,7 +22,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     //En este archivo haríamos las peticiones a la base de datos. Desde las implementaciones a través de la interfase.
     private ConnectionDB connectionDB = new ConnectionDB();
-    private EmployeeMapperImpl employeeMapperImpl = new EmployeeMapperImpl();
+
+    //private EmployeeMapperImpl employeeMapperImpl = new EmployeeMapperImpl();
 
     @Override
     public void insertEmployee(Employee employee) {
@@ -30,10 +31,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
         PreparedStatement stmt = null;
 
         try {
+            //Para determinar si la persona relacionada existe en los registros
+            isRegistrationExist("personas", employee.getIdPersonEmployee());
+
             conn = connectionDB.getConnection();
             stmt = conn.prepareStatement(Constants.SQL_INSERT_EMPLOYEE);
 
-            //alta_contrato, salario, persona_FK
             long time = employee.getStartContract().getTime();
             stmt.setDate(1, new Date(time));
             stmt.setDouble(2, employee.getSalary());
@@ -76,6 +79,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
             System.out.println(resultUpdate);
 
+            //Parcial - A mejorar - Para que no devuelva error
             EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
             return employeeResponseDTO;
 
