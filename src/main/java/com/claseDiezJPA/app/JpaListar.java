@@ -4,6 +4,7 @@ import com.claseDiezJPA.app.configuration.JpaUtilDB;
 import com.claseDiezJPA.app.entity.Cliente;
 import jakarta.persistence.EntityManager;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class JpaListar {
@@ -18,9 +19,14 @@ public class JpaListar {
         for(Cliente listCliente:clientes){
             System.out.println("Lista cliente: " + listCliente.toString());
         }
-
         //Similar a lo de arriba
         //clientes.forEach(System.out::println);
+
+//        Cliente cliente = new Cliente("Jose", "Perez", "TARJETA", LocalDate.now());
+//
+//        em.getTransaction().begin();
+//
+//        em.getTransaction().commit();
 
         em.close();
 

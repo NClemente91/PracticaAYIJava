@@ -5,11 +5,14 @@
         <class>com.claseDiezJPA.app.entity.Cliente</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/curso_ayi_jpadb?serverTimezone=America/Santiago"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/curso_ayi_jpadb?serverTimezone=UTC"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="root57284"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!-- Para crear las tablas a partir de la entidad automáticamente -->
+<!--             <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <!-- validate, update, create, create-drop -->
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>

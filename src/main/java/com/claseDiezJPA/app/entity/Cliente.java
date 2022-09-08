@@ -31,4 +31,10 @@ public class Cliente {
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
 
+    public Cliente(String nombre, String apellido, String formaPago, LocalDate fechaCreacion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.formaPago = formaPago;
+        this.fechaCreacion = fechaCreacion;
+    }
 }
