@@ -8,9 +8,9 @@ import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class MainOneToManyUnidireccional {
     public static void main(String[] args) {
-        System.out.println("Asociaciones");
+        System.out.println("Asociaciones - One to Many Unidireccional");
 
         EntityManager em = JpaUtilDB.getEntityManager();
 

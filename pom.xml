@@ -63,7 +63,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.claseOnce.app.Main</mainClass>
+                            <mainClass>com.claseOnce.app.MainOneToManyUnidireccional</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

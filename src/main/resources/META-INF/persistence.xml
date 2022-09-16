@@ -4,6 +4,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.claseOnce.app.entities.Cliente</class>
         <class>com.claseOnce.app.entities.Direccion</class>
+        <class>com.claseOnce.app.entities.Factura</class>
+        <class>com.claseOnce.app.entities.Curso</class>
+        <class>com.claseOnce.app.entities.Alumno</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/curso_ayi_asoc?serverTimezone=UTC"/>
@@ -14,7 +17,7 @@
             <!-- Para crear las tablas a partir de la entidad automáticamente -->
              <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!-- validate, update, create, create-drop -->
-<!--            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>-->
+            <property name="jakarta.persistence.schema-generation.database.action" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>

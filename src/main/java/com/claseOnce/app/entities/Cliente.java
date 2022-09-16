@@ -3,6 +3,7 @@ package com.claseOnce.app.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 
-public class Cliente {
+public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +35,9 @@ public class Cliente {
             inverseJoinColumns = @JoinColumn(name = "id_direccion"),
             uniqueConstraints = @UniqueConstraint(columnNames={"id_direccion"}))
     private List<Direccion> direcciones;
+
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "cliente")
+    private List<Factura> facturas;
 
     @Embedded
     private Auditoria audit = new Auditoria();
