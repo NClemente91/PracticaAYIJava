@@ -1,5 +1,6 @@
 package com.ayi.curso.rest.serv.app.services.impl;
 
+import com.ayi.curso.rest.serv.app.dtos.request.persons.PersonDTO;
 import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
 import com.ayi.curso.rest.serv.app.entities.PersonEntity;
 import com.ayi.curso.rest.serv.app.mappers.IPersonMapper;
@@ -76,6 +77,32 @@ public class PersonServiceImpl extends Exception implements IPersonService {
 
         personResponseDTO = personMapper.entityToDto(entity);
         return personResponseDTO;
+
+    }
+
+    @Override
+    public void deletePersonById(Long idPerson){
+
+        Optional<PersonEntity> entity = personRepository.findById(idPerson);
+
+        if(!entity.isPresent()) {
+            throw new RuntimeException("Error no existe el id de persona buscado");
+        }
+
+        personRepository.delete(entity.get());
+
+        System.out.println("Persona con id " + idPerson + " eliminada correctamente.");
+
+    }
+
+    @Override
+    public PersonResponseDTO addPerson(PersonDTO personDTO){
+
+        PersonEntity personEntity = personMapper.dtoToEntity(personDTO);
+
+        PersonEntity personSaved = personRepository.save(personEntity);
+
+        return personMapper.entityToDto(personSaved);
 
     }
 

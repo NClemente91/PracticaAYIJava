@@ -1,17 +1,14 @@
 package com.ayi.curso.rest.serv.app.controllers;
 
+import com.ayi.curso.rest.serv.app.dtos.request.persons.PersonDTO;
 import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
 import com.ayi.curso.rest.serv.app.services.IPersonService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-
 
 import java.util.List;
 
@@ -90,6 +87,53 @@ public class PersonController {
             @PathVariable("apellido") String apellido ) {
 
         return ResponseEntity.ok(personService.findPersonByName(nombre, apellido));
+
+    }
+
+    @DeleteMapping(value = "/deleteById/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "Retrieves data associated to List Master by Id",
+            httpMethod = "DELETE",
+            response = PersonResponseDTO.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 200,
+                    message = "Body content with basic information for this Lists Master by Id"
+            ),
+            @ApiResponse(
+                    code = 400,
+                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
+    })
+    public void deletePersonById(
+            @ApiParam(name = "id", required = true, value = "Person Id", example = "1")
+            @PathVariable("id") Long id) {
+
+        personService.findPersonById(id);
+
+    }
+
+    @PostMapping(value = "/addPerson", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "Retrieves data associated to List Master by Id",
+            httpMethod = "POST",
+            response = PersonResponseDTO.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 200,
+                    message = "Body content with basic information for this Lists Master by Id"
+            ),
+            @ApiResponse(
+                    code = 400,
+                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
+    })
+
+    public ResponseEntity<PersonResponseDTO> addPerson(
+            @ApiParam(name = "person", required = true, value = "Person", example = "1")
+            @RequestBody PersonDTO person) {
+
+        return ResponseEntity.ok(personService.addPerson(person));
 
     }
 
