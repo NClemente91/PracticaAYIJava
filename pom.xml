@@ -15,6 +15,8 @@
 	<description>Demo project for Spring Boot for AYI Academy</description>
 	<properties>
 		<java.version>18</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 		<modelmapper.version>3.1.0</modelmapper.version>
 		<springfox.version>2.9.2</springfox.version>
 	</properties>
@@ -27,7 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

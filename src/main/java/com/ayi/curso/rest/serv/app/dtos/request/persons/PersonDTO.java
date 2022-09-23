@@ -28,13 +28,16 @@ public class PersonDTO implements Serializable {
     @ApiModelProperty(position = 3, required = true, notes = "Non negative value, The type document list is required.")
     private String typeDocument;
 
-    @ApiModelProperty(position = 1, required = true, notes = "Non negative value, The number document is required.")
+    @ApiModelProperty(position = 4, required = true, notes = "Non negative value, The number document is required.")
     private Integer numberDocument;
 
-    @ApiModelProperty(position = 1, required = true, notes = "Non negative value, The date Created list is required.")
+    @ApiModelProperty(position = 5, required = true, notes = "Non negative value, The date born document is required.")
+    private LocalDate dateBorn;
+
+    @ApiModelProperty(position = 6, required = true, notes = "Non negative value, The date Created list is required.")
     private LocalDate dateCreated;
 
-    @ApiModelProperty(position = 1, notes = "Non negative value, The Date modified list is required.")
+    @ApiModelProperty(position = 7, notes = "Non negative value, The Date modified list is required.")
     private LocalDate dateModified;
 
 }
