@@ -14,7 +14,9 @@ import java.time.LocalDate;
 @ToString
 @Builder
 @Entity
-@Table(name = "persona")
+@Table(name = "persona", uniqueConstraints = { @UniqueConstraint(columnNames = { "numero_documento" }) })
+//Esto se agrega para que no pueda haber dos registros con el mismo numero de DNI
+//uniqueConstraints = { @UniqueConstraint(columnNames = { "numero_documento" }) }
 public class PersonEntity implements Serializable {
 
     @Id

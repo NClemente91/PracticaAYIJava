@@ -18,22 +18,14 @@ public class PersonMapperImpl extends Exception implements IPersonMapper {
 
     private final ModelMapper modelMapper;
     @Override
-    public PersonResponseDTO entityToDto(PersonEntity entity) {
+    public PersonResponseDTO entityToResponseDto(PersonEntity entity) {
 
         PersonResponseDTO personResponseDTO = new PersonResponseDTO();
         modelMapper.map(entity, personResponseDTO);
         return personResponseDTO;
     }
     @Override
-    public PersonEntity dtoToEntity(PersonDTO dto) {
-        PersonEntity personEntity = new PersonEntity();
-        modelMapper.map(dto, personEntity);
-        return personEntity;
-    }
-
-    @Override
-    public PersonEntity toEntityByRequest(PersonDTO dto) {
-
+    public PersonEntity requestDtoToEntity(PersonDTO dto) {
         PersonEntity personEntity = new PersonEntity();
         modelMapper.map(dto, personEntity);
         return personEntity;

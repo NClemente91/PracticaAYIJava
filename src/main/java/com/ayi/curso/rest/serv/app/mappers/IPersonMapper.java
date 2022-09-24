@@ -6,10 +6,8 @@ import com.ayi.curso.rest.serv.app.entities.PersonEntity;
 
 public interface IPersonMapper {
 
-    PersonResponseDTO entityToDto(PersonEntity entity);
+    PersonResponseDTO entityToResponseDto(PersonEntity entity);
 
-    PersonEntity dtoToEntity(PersonDTO dto);
-
-    PersonEntity toEntityByRequest(PersonDTO dto);
+    PersonEntity requestDtoToEntity(PersonDTO dto);
 
 }

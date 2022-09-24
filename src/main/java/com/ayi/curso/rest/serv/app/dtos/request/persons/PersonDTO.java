@@ -16,7 +16,6 @@ import java.time.LocalDate;
         value = "PersonDTO",
         description = "Represents the data needed to created Persons"
 )
-
 public class PersonDTO implements Serializable {
 
     @ApiModelProperty(position = 1, required = true, notes = "Non negative value, The first name is required.")

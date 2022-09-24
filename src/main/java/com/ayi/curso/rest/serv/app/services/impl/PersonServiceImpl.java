@@ -3,6 +3,7 @@ package com.ayi.curso.rest.serv.app.services.impl;
 import com.ayi.curso.rest.serv.app.dtos.request.persons.PersonDTO;
 import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
 import com.ayi.curso.rest.serv.app.entities.PersonEntity;
+import com.ayi.curso.rest.serv.app.exceptions.NotFoundException;
 import com.ayi.curso.rest.serv.app.mappers.IPersonMapper;
 import com.ayi.curso.rest.serv.app.repositories.IPersonRepository;
 import com.ayi.curso.rest.serv.app.services.IPersonService;
@@ -58,12 +59,11 @@ public class PersonServiceImpl extends Exception implements IPersonService {
 
         Optional<PersonEntity> entity = personRepository.findById(idPerson);
 
-
         if(!entity.isPresent()) {
-            throw new RuntimeException("Error no existe el id de persona buscado");
+            throw new NotFoundException("El registro persona con id " + idPerson + " no existe");
         }
 
-        personResponseDTO = personMapper.entityToDto(entity.get());
+        personResponseDTO = personMapper.entityToResponseDto(entity.get());
         return personResponseDTO;
 
     }
@@ -73,9 +73,13 @@ public class PersonServiceImpl extends Exception implements IPersonService {
 
         PersonResponseDTO personResponseDTO;
 
-        PersonEntity entity = personRepository.getPersonByName(name, ape);
+        Optional<PersonEntity> entity = personRepository.getPersonByName(name, ape);
 
-        personResponseDTO = personMapper.entityToDto(entity);
+        if(!entity.isPresent()) {
+            throw new NotFoundException("La persona con nombre " + name + " y  apellido " + ape + " no existe");
+        }
+
+        personResponseDTO = personMapper.entityToResponseDto(entity.get());
         return personResponseDTO;
 
     }
@@ -86,7 +90,7 @@ public class PersonServiceImpl extends Exception implements IPersonService {
         Optional<PersonEntity> entity = personRepository.findById(idPerson);
 
         if(!entity.isPresent()) {
-            throw new RuntimeException("Error no existe el id de persona buscado");
+            throw new NotFoundException("El registro persona con id " + idPerson + " no existe");
         }
 
         personRepository.delete(entity.get());
@@ -98,11 +102,11 @@ public class PersonServiceImpl extends Exception implements IPersonService {
     @Override
     public PersonResponseDTO addPerson(PersonDTO personDTO){
 
-        PersonEntity personEntity = personMapper.dtoToEntity(personDTO);
+        PersonEntity personEntity = personMapper.requestDtoToEntity(personDTO);
 
         PersonEntity personSaved = personRepository.save(personEntity);
 
-        return personMapper.entityToDto(personSaved);
+        return personMapper.entityToResponseDto(personSaved);
 
     }
 
