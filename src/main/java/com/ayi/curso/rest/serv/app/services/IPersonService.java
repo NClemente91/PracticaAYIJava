@@ -6,7 +6,8 @@ import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
 import java.util.List;
 
 public interface IPersonService {
-    List<PersonResponseDTO> findAllPersons();
+
+    List<PersonResponseDTO> findAllPersons(int pageNumber, int pageSize, String sortBy, String sortDir);
 
     PersonResponseDTO findPersonById(Long idPerson);
 
@@ -15,4 +16,6 @@ public interface IPersonService {
     void deletePersonById(Long idPerson);
 
     PersonResponseDTO addPerson(PersonDTO personDTO);
+
+    void updatePersonById(Long id, PersonDTO person);
 }

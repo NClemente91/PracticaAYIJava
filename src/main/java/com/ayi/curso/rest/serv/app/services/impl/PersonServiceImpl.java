@@ -10,6 +10,10 @@ import com.ayi.curso.rest.serv.app.services.IPersonService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +34,16 @@ public class PersonServiceImpl extends Exception implements IPersonService {
     private IPersonMapper personMapper;
 
     @Override
-    public List<PersonResponseDTO> findAllPersons() {
+    public List<PersonResponseDTO> findAllPersons(int pageNumber, int pageSize, String sortBy, String sortDir) {
 
         List<PersonResponseDTO> personResponseDTOs;
 
-        List<PersonEntity> personEntities = personRepository.findAll();
+        //Paginación
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<PersonEntity> personEntities = personRepository.findAll(pageable);
 
         personResponseDTOs = personEntities.stream()
                 .map(lt -> new PersonResponseDTO(
@@ -107,6 +116,10 @@ public class PersonServiceImpl extends Exception implements IPersonService {
         PersonEntity personSaved = personRepository.save(personEntity);
 
         return personMapper.entityToResponseDto(personSaved);
+
+    }
+
+    public void updatePersonById(Long id, PersonDTO person){
 
     }
 

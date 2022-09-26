@@ -35,9 +35,13 @@ public class PersonController {
                     code = 400,
                     message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
     })
-    public ResponseEntity<List<PersonResponseDTO>> getAllPersons() {
+    public ResponseEntity<List<PersonResponseDTO>> getAllPersons(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "idPerson", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
 
-        List<PersonResponseDTO> personResponseDTOs = personService.findAllPersons();
+        List<PersonResponseDTO> personResponseDTOs = personService.findAllPersons(pageNumber, pageSize, sortBy, sortDir);
         return ResponseEntity.ok(personResponseDTOs);
 
     }
@@ -67,7 +71,7 @@ public class PersonController {
 
     @GetMapping(value = "/getPersonByName/{nombre}/{apellido}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(
-            value = "Retrieves data associated to List Master by Id",
+            value = "Retrieves data associated to List Master by Name and LastName",
             httpMethod = "GET",
             response = PersonResponseDTO.class
     )
@@ -84,10 +88,57 @@ public class PersonController {
             @ApiParam(name = "nombre", required = true, value = "Nombre", example = "1")
             @PathVariable("nombre") String nombre,
             @ApiParam(name = "apellido", required = true, value = "Apellido", example = "1")
-            @PathVariable("apellido") String apellido ) {
+            @PathVariable("apellido") String apellido) {
 
         return ResponseEntity.ok(personService.findPersonByName(nombre, apellido));
 
+    }
+
+    @PostMapping(value = "/addPerson", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "Retrieves data associated to List Master by Id",
+            httpMethod = "POST",
+            response = PersonResponseDTO.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 200,
+                    message = "Body content with basic information for this Lists Master by Id"
+            ),
+            @ApiResponse(
+                    code = 400,
+                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
+    })
+    public ResponseEntity<PersonResponseDTO> addPerson(
+            @ApiParam(name = "person", required = true, value = "Person", example = "1")
+            @RequestBody PersonDTO person) {
+
+        return ResponseEntity.ok(personService.addPerson(person));
+
+    }
+
+    @PutMapping(value = "/updatePerson/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "Retrieves data associated to List Master by Id",
+            httpMethod = "PUT",
+            response = PersonResponseDTO.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 200,
+                    message = "Body content with basic information for this Lists Master by Id"
+            ),
+            @ApiResponse(
+                    code = 400,
+                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
+    })
+    public ResponseEntity<Void> updatePerson(
+            @ApiParam(name = "id person", required = true, example = "1") @PathVariable Long id,
+            @RequestBody PersonDTO person) {
+
+        personService.updatePersonById(id, person);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/deleteById/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -110,30 +161,6 @@ public class PersonController {
             @PathVariable("id") Long id) {
 
         personService.findPersonById(id);
-
-    }
-
-    @PostMapping(value = "/addPerson", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(
-            value = "Retrieves data associated to List Master by Id",
-            httpMethod = "POST",
-            response = PersonResponseDTO.class
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    code = 200,
-                    message = "Body content with basic information for this Lists Master by Id"
-            ),
-            @ApiResponse(
-                    code = 400,
-                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
-    })
-
-    public ResponseEntity<PersonResponseDTO> addPerson(
-            @ApiParam(name = "person", required = true, value = "Person", example = "1")
-            @RequestBody PersonDTO person) {
-
-        return ResponseEntity.ok(personService.addPerson(person));
 
     }
 
