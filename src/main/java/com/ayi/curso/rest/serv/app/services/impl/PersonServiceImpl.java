@@ -2,6 +2,7 @@ package com.ayi.curso.rest.serv.app.services.impl;
 
 import com.ayi.curso.rest.serv.app.dtos.request.persons.PersonDTO;
 import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
+import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTOFull;
 import com.ayi.curso.rest.serv.app.entities.PersonEntity;
 import com.ayi.curso.rest.serv.app.exceptions.NotFoundException;
 import com.ayi.curso.rest.serv.app.mappers.IPersonMapper;
@@ -62,6 +63,29 @@ public class PersonServiceImpl extends Exception implements IPersonService {
     }
 
     @Override
+    public PersonResponseDTOFull findAllPersonsForPage(int page, int size) {
+
+        PersonResponseDTOFull personResponseDTOFull;
+
+        //Paginación
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<PersonEntity> personEntitiesPages = personRepository.findAll(pageable);
+
+        if(personEntitiesPages != null && !personEntitiesPages.isEmpty()) {
+            personResponseDTOFull = personMapper.listPersonDTOs(personEntitiesPages.getContent());
+            personResponseDTOFull.setSize(personEntitiesPages.getSize());
+            personResponseDTOFull.setCurrentPage(personEntitiesPages.getNumber() + 1);
+            personResponseDTOFull.setTotalPages(personEntitiesPages.getTotalPages());
+            personResponseDTOFull.setTotalElements((int) personEntitiesPages.getTotalElements());
+            return personResponseDTOFull;
+        } else {
+            throw new RuntimeException("Error no identificado de runtime");
+        }
+    }
+
+    @Override
     public PersonResponseDTO findPersonById(Long idPerson){
 
         PersonResponseDTO personResponseDTO;
@@ -119,7 +143,13 @@ public class PersonServiceImpl extends Exception implements IPersonService {
 
     }
 
-    public void updatePersonById(Long id, PersonDTO person){
+    public void updatePersonById(Long idPerson, PersonDTO person){
+
+        Optional<PersonEntity> entity = personRepository.findById(idPerson);
+
+        if(!entity.isPresent()) {
+            throw new NotFoundException("El registro persona con id " + idPerson + " no existe");
+        }
 
     }
 

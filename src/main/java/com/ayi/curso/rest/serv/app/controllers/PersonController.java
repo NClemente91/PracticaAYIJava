@@ -2,10 +2,12 @@ package com.ayi.curso.rest.serv.app.controllers;
 
 import com.ayi.curso.rest.serv.app.dtos.request.persons.PersonDTO;
 import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTO;
+import com.ayi.curso.rest.serv.app.dtos.response.persons.PersonResponseDTOFull;
 import com.ayi.curso.rest.serv.app.services.IPersonService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,14 @@ import java.util.List;
 public class PersonController {
     private IPersonService personService;
 
+    /**
+     * GET ALL PERSONS
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
+     * @return List of persons
+     */
     @GetMapping(value = "/getAllPersons")
     @ApiOperation(
             value = "Retrieves all Lists Persons",
@@ -46,6 +56,37 @@ public class PersonController {
 
     }
 
+
+    @GetMapping(value = "/getAllPersons/{page}/{size}")
+    @ApiOperation(
+            value = "Retrieves all Lists Persons",
+            httpMethod = "GET",
+            response = PersonResponseDTOFull.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Body content with basic information about persons",
+                    response = PersonResponseDTOFull.class),
+            @ApiResponse(
+                    code = 400,
+                    message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
+    })
+    public ResponseEntity<PersonResponseDTOFull> getAllPersonsForPage(
+            @ApiParam(value = "page to display", required = true, example = "1")
+            @PathVariable(name = "page") Integer page,
+            @ApiParam(value = "number of items per request", required = true, example = "1")
+            @PathVariable(name = "size") Integer size)  {
+
+        PersonResponseDTOFull personResponseDTOs = personService.findAllPersonsForPage(page, size);
+        return ResponseEntity.ok(personResponseDTOs);
+
+    }
+
+    /**
+     * GET PERSON BY ID
+     * @param id
+     * @return Person
+     */
     @GetMapping(value = "/getPersonById/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(
             value = "Retrieves data associated to List Master by Id",
@@ -94,6 +135,11 @@ public class PersonController {
 
     }
 
+    /**
+     * Método CREATE
+     * @param person
+     * @return Created Person.
+     */
     @PostMapping(value = "/addPerson", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(
             value = "Retrieves data associated to List Master by Id",
@@ -102,7 +148,7 @@ public class PersonController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    code = 200,
+                    code = 201,
                     message = "Body content with basic information for this Lists Master by Id"
             ),
             @ApiResponse(
@@ -113,10 +159,17 @@ public class PersonController {
             @ApiParam(name = "person", required = true, value = "Person", example = "1")
             @RequestBody PersonDTO person) {
 
-        return ResponseEntity.ok(personService.addPerson(person));
-
+        //return ResponseEntity.ok(personService.addPerson(person));
+        //Otra forma de armar la respuesta HTTP
+        return new ResponseEntity<>(personService.addPerson(person), HttpStatus.CREATED);
     }
 
+    /**
+     * Método UPDATE
+     * @param id
+     * @param person
+     * @return Updated Person
+     */
     @PutMapping(value = "/updatePerson/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(
             value = "Retrieves data associated to List Master by Id",
@@ -141,26 +194,35 @@ public class PersonController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Método DELETE
+     * @param id
+     * @return void
+     */
     @DeleteMapping(value = "/deleteById/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(
-            value = "Retrieves data associated to List Master by Id",
-            httpMethod = "DELETE",
-            response = PersonResponseDTO.class
+            value = "Delete data associated to List Master by Id",
+            httpMethod = "DELETE"
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    code = 200,
-                    message = "Body content with basic information for this Lists Master by Id"
+                    code = 204,
+                    message = "Borrado correctamente"
             ),
             @ApiResponse(
                     code = 400,
                     message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
     })
-    public void deletePersonById(
+    //Response entity vacía para poder mandar una respuesta http
+    //Response Entity <?> - Me permite crear la estructura de respuesta dinámica
+    public ResponseEntity<Void> deletePersonById(
             @ApiParam(name = "id", required = true, value = "Person Id", example = "1")
             @PathVariable("id") Long id) {
 
         personService.findPersonById(id);
+
+        //Con esta línea nos aseguramos una respuesta http
+        return ResponseEntity.noContent().build();
 
     }
 
