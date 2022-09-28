@@ -185,13 +185,11 @@ public class PersonController {
                     code = 400,
                     message = "Describes errors on invalid payload received, e.g: missing fields, invalid data formats, etc.")
     })
-    public ResponseEntity<Void> updatePerson(
-            @ApiParam(name = "id person", required = true, example = "1") @PathVariable Long id,
+    public ResponseEntity<PersonResponseDTO> updatePerson(
+            @ApiParam(name = "id", required = true, example = "1") @PathVariable("id") Long id,
             @RequestBody PersonDTO person) {
 
-        personService.updatePersonById(id, person);
-
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(personService.updatePersonById(id, person), HttpStatus.CREATED);
     }
 
     /**
@@ -219,7 +217,7 @@ public class PersonController {
             @ApiParam(name = "id", required = true, value = "Person Id", example = "1")
             @PathVariable("id") Long id) {
 
-        personService.findPersonById(id);
+        personService.deletePersonById(id);
 
         //Con esta línea nos aseguramos una respuesta http
         return ResponseEntity.noContent().build();

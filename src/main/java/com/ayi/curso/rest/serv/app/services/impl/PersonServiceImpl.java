@@ -137,19 +137,27 @@ public class PersonServiceImpl extends Exception implements IPersonService {
 
         PersonEntity personEntity = personMapper.requestDtoToEntity(personDTO);
 
-        PersonEntity personSaved = personRepository.save(personEntity);
+        PersonEntity savedPerson = personRepository.save(personEntity);
 
-        return personMapper.entityToResponseDto(personSaved);
+        return personMapper.entityToResponseDto(savedPerson);
 
     }
 
-    public void updatePersonById(Long idPerson, PersonDTO person){
+    @Override
+    public PersonResponseDTO updatePersonById(Long idPerson, PersonDTO person){
 
         Optional<PersonEntity> entity = personRepository.findById(idPerson);
 
         if(!entity.isPresent()) {
             throw new NotFoundException("El registro persona con id " + idPerson + " no existe");
         }
+
+        PersonEntity personEntity = personMapper.requestDtoToEntity(person);
+        personEntity.setIdPerson(entity.get().getIdPerson());
+
+        PersonEntity updatedPerson = personRepository.save(personEntity);
+
+        return personMapper.entityToResponseDto(updatedPerson);
 
     }
 

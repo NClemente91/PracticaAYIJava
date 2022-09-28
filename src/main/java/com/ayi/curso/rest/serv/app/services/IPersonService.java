@@ -20,5 +20,5 @@ public interface IPersonService {
 
     PersonResponseDTO addPerson(PersonDTO personDTO);
 
-    void updatePersonById(Long id, PersonDTO person);
+    PersonResponseDTO updatePersonById(Long id, PersonDTO person);
 }
